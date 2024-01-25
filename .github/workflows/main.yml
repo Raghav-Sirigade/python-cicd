@@ -5,16 +5,22 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: install package
+      - uses: actions/checkout@v2
+      - name: set up Pythong 3.10.13
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.10.13
+      - name: Install packages
         run: make install
-      - name: lint
+      - name: Lint with pylint
         run: make lint
-      - name: test
+      - name: Test with pytest
         run: make test
-      - name: format
+      - name: Format with Python Black
         run: make format
